@@ -51,3 +51,4 @@ MonoBehaviour:
   cells: []
   position: {x: 0, y: 0}
   board: {fileID: 0}
+  freeze: 0

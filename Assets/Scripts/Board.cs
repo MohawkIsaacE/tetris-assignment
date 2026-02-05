@@ -7,6 +7,7 @@ public class Board : MonoBehaviour
 {
     public TetrisManager tetrisManager;
     public UIController uiController;
+    public ParticleSystem bountyParticle;
 
     public TetrominoData[] tetrominos;
     public Piece piecePrefab;
@@ -20,7 +21,7 @@ public class Board : MonoBehaviour
 
     private Piece activePiece;
 
-    public int currentLineBounty;
+    public int currentLineBounty = 4;
 
     Dictionary<Vector3Int, Piece> pieces = new Dictionary<Vector3Int, Piece>();
 
@@ -165,10 +166,14 @@ public class Board : MonoBehaviour
         }
         
         int score = tetrisManager.CalculateScore(destroyedLines.Count);
+
+        // If the player hit the bounty, multiply the points gained
         if (destroyedLines.Count == currentLineBounty)
         {
             score *= uiController.bountyMultiplier[destroyedLines.Count - 1];
+            bountyParticle.Play();
         }
+
         tetrisManager.ChangeScore(score);
     }
 
