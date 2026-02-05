@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: Pink
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: bc86f121a7708ea47802d47f0ccdcfee, type: 3}
-  m_Color: {r: 0.070606306, g: 0.6415094, b: 0.08866985, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b46fa7dd384fab34d9ffe18c82334c0f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
     e01: 0
