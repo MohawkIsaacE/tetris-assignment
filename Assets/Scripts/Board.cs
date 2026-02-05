@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class Board : MonoBehaviour
 {
     public TetrisManager tetrisManager;
+    public UIController uiController;
 
     public TetrominoData[] tetrominos;
     public Piece piecePrefab;
@@ -19,8 +20,7 @@ public class Board : MonoBehaviour
 
     private Piece activePiece;
 
-    private Tetromino[] sequence = new Tetromino[] {Tetromino.Z, Tetromino.I, Tetromino.J, Tetromino.L, Tetromino.T, Tetromino.N};
-    private int currentPieceInSequence = 0;
+    public int currentLineBounty;
 
     Dictionary<Vector3Int, Piece> pieces = new Dictionary<Vector3Int, Piece>();
 
@@ -69,29 +69,20 @@ public class Board : MonoBehaviour
     {
         tetrisManager.SetGameOver(false);
         //SpawnRandomPiece();
-        //SpawnSequence();
     }
 
     public void SpawnRandomPiece()
     {
         activePiece = Instantiate(piecePrefab);
 
-        activePiece.Initialize(this, (Tetromino)Random.Range(0, tetrominos.Length - 1));
+        activePiece.Initialize(this, (Tetromino)Random.Range(0, tetrominos.Length));
 
         CheckEndGame();
 
-        Set(activePiece);
-    }
+        // Randomize the next bounty
+        currentLineBounty = Random.Range(1, 5);
+        tetrisManager.SetNewBounty();
 
-    public void SpawnSequence()
-    {
-        activePiece = Instantiate(piecePrefab);
-
-        if (currentPieceInSequence < sequence.Length)
-        {
-            activePiece.Initialize(this, sequence[currentPieceInSequence]);
-            currentPieceInSequence++;
-        }
         Set(activePiece);
     }
 
@@ -174,6 +165,10 @@ public class Board : MonoBehaviour
         }
         
         int score = tetrisManager.CalculateScore(destroyedLines.Count);
+        if (destroyedLines.Count == currentLineBounty)
+        {
+            score *= uiController.bountyMultiplier[destroyedLines.Count - 1];
+        }
         tetrisManager.ChangeScore(score);
     }
 

@@ -13,6 +13,7 @@ public class TetrisManager : MonoBehaviour
 
     public UnityEvent OnScoreChanged;
     public UnityEvent OnGameOver;
+    public UnityEvent OnNewPiece;
 
     private void Start()
     {
@@ -47,5 +48,10 @@ public class TetrisManager : MonoBehaviour
 
         this.gameOver = gameOver;
         OnGameOver.Invoke();
+    }
+
+    public void SetNewBounty()
+    {
+        OnNewPiece.Invoke();
     }
 }
